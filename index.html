@@ -1,212 +1,785 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetProbe IoT Security Scanner | Download for Windows</title>
-    <style>
-        :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --accent-color: #58a6ff;
-            --text-main: #c9d1d9;
-            --text-muted: #8b949e;
-            --border-color: #30363d;
-            --success-color: #238636;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetProbe — IoT Security Scanner for Windows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+:root{
+  --bg:#080c12;
+  --bg2:#0d1420;
+  --surface:#111827;
+  --surface2:#161f30;
+  --border:#1e2d45;
+  --accent:#3b82f6;
+  --accent2:#60a5fa;
+  --accent-glow:rgba(59,130,246,0.25);
+  --danger:#ef4444;
+  --success:#10b981;
+  --warning:#f59e0b;
+  --text:#e2e8f0;
+  --text-dim:#64748b;
+  --text-muted:#334155;
+  --mono:'Space Mono',monospace;
+  --sans:'Syne',sans-serif;
+}
 
-        header {
-            border-bottom: 1px solid var(--border-color);
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+html{scroll-behavior:smooth}
 
-        .logo {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  overflow-x:hidden;
+  cursor:default;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:999;
+  opacity:.4;
+}
 
-        .hero {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 4rem auto;
-        }
+/* ── GRID BACKGROUND ── */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+  z-index:0;
+}
 
-        .hero h1 {
-            font-size: 3rem;
-            color: #fff;
-            margin-bottom: 1rem;
-            font-weight: 800;
-        }
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 3rem;
+  background:rgba(8,12,18,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
 
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-        }
+.nav-logo{
+  display:flex;align-items:center;gap:.75rem;
+  font-family:var(--mono);font-size:1rem;font-weight:700;
+  color:#fff;text-decoration:none;letter-spacing:-.02em;
+}
 
-        .btn-download {
-            background-color: var(--success-color);
-            color: #fff;
-            padding: 0.8rem 2rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            display: inline-block;
-            transition: background-color 0.2s;
-            box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
-        }
+.nav-logo .shield{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,var(--accent),#1d4ed8);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+  box-shadow:0 0 20px var(--accent-glow);
+}
 
-        .btn-download:hover {
-            background-color: #2ea043;
-        }
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{
+  color:var(--text-dim);text-decoration:none;
+  font-size:.85rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--accent2)}
 
-        .meta-info {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
+.nav-cta{
+  background:var(--accent);color:#fff;
+  padding:.5rem 1.25rem;border-radius:6px;
+  font-size:.85rem;font-weight:700;text-decoration:none;
+  letter-spacing:.03em;
+  transition:background .2s,box-shadow .2s;
+  box-shadow:0 0 20px var(--accent-glow);
+}
+.nav-cta:hover{background:var(--accent2);color:#fff;box-shadow:0 0 30px var(--accent-glow)}
 
-        .meta-info a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  padding:8rem 2rem 4rem;
+  overflow:hidden;
+}
 
-        .trust-banner {
-            background-color: rgba(88, 166, 255, 0.1);
-            border: 1px solid rgba(88, 166, 255, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 2rem auto;
-            max-width: 650px;
-            text-align: left;
-        }
+.hero-glow{
+  position:absolute;
+  top:20%;left:50%;transform:translateX(-50%);
+  width:700px;height:400px;
+  background:radial-gradient(ellipse,rgba(59,130,246,0.12) 0%,transparent 70%);
+  pointer-events:none;
+}
 
-        .trust-banner h4 {
-            margin: 0 0 0.5rem 0;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(59,130,246,0.1);
+  border:1px solid rgba(59,130,246,0.25);
+  border-radius:100px;
+  padding:.4rem 1rem;
+  font-family:var(--mono);font-size:.75rem;
+  color:var(--accent2);letter-spacing:.08em;
+  margin-bottom:2rem;
+  animation:fadeUp .6s ease both;
+}
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-        }
+.hero-badge .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--success);
+  box-shadow:0 0 8px var(--success);
+  animation:pulse 2s infinite;
+}
 
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 2rem;
-            transition: transform 0.2s;
-        }
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.6;transform:scale(1.3)}
+}
 
-        .card h3 {
-            color: #fff;
-            margin-top: 0;
-        }
+.hero h1{
+  font-size:clamp(2.8rem,6vw,5.5rem);
+  font-weight:800;
+  line-height:1.0;
+  letter-spacing:-.04em;
+  color:#fff;
+  margin-bottom:1.5rem;
+  animation:fadeUp .6s .1s ease both;
+}
 
-        .requirements {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
+.hero h1 span{
+  background:linear-gradient(135deg,var(--accent2),#818cf8);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
 
-        footer {
-            text-align: center;
-            padding: 4rem 2rem 2rem 2rem;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-    </style>
+.hero-sub{
+  font-size:1.15rem;
+  color:var(--text-dim);
+  max-width:560px;
+  line-height:1.7;
+  margin-bottom:3rem;
+  animation:fadeUp .6s .2s ease both;
+}
+
+.hero-actions{
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp .6s .3s ease both;
+}
+
+.btn-primary{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--accent);color:#fff;
+  padding:.9rem 2rem;border-radius:8px;
+  font-weight:700;font-size:1rem;text-decoration:none;
+  transition:all .2s;
+  box-shadow:0 0 30px var(--accent-glow);
+  border:1px solid transparent;
+}
+.btn-primary:hover{
+  background:transparent;
+  border-color:var(--accent);
+  color:var(--accent2);
+  box-shadow:0 0 40px var(--accent-glow);
+}
+
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:transparent;color:var(--text-dim);
+  padding:.9rem 2rem;border-radius:8px;
+  font-weight:600;font-size:1rem;text-decoration:none;
+  border:1px solid var(--border);
+  transition:all .2s;
+}
+.btn-secondary:hover{color:var(--text);border-color:var(--text-muted)}
+
+.hero-meta{
+  margin-top:1.25rem;
+  font-family:var(--mono);font-size:.75rem;
+  color:var(--text-muted);
+  animation:fadeUp .6s .4s ease both;
+}
+.hero-meta a{color:var(--accent);text-decoration:none}
+.hero-meta a:hover{text-decoration:underline}
+
+/* ── TERMINAL PREVIEW ── */
+.terminal-wrap{
+  position:relative;z-index:1;
+  margin:0 auto 6rem;
+  max-width:800px;
+  padding:0 2rem;
+  animation:fadeUp .8s .5s ease both;
+}
+
+.terminal{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:
+    0 0 0 1px rgba(59,130,246,0.08),
+    0 40px 80px rgba(0,0,0,.6),
+    0 0 60px rgba(59,130,246,0.06);
+}
+
+.terminal-bar{
+  background:var(--surface2);
+  padding:.8rem 1rem;
+  display:flex;align-items:center;gap:.5rem;
+  border-bottom:1px solid var(--border);
+}
+.terminal-bar .dot{width:12px;height:12px;border-radius:50%}
+.dot-r{background:#ef4444}
+.dot-y{background:#f59e0b}
+.dot-g{background:#10b981}
+.terminal-bar .title{
+  margin-left:auto;margin-right:auto;
+  font-family:var(--mono);font-size:.75rem;
+  color:var(--text-muted);
+}
+
+.terminal-body{
+  padding:1.5rem;
+  font-family:var(--mono);font-size:.82rem;
+  line-height:1.9;color:#94a3b8;
+}
+
+.t-prompt{color:#475569}
+.t-cmd{color:#e2e8f0}
+.t-ok{color:#10b981}
+.t-warn{color:#f59e0b}
+.t-crit{color:#ef4444}
+.t-info{color:#60a5fa}
+.t-dim{color:#334155}
+.t-score{color:#818cf8;font-weight:700}
+
+/* ── STATS ROW ── */
+.stats{
+  position:relative;z-index:1;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--border);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  margin-bottom:6rem;
+}
+
+.stat{
+  background:var(--bg);
+  padding:2.5rem 2rem;
+  text-align:center;
+}
+.stat-num{
+  font-family:var(--mono);
+  font-size:2.5rem;font-weight:700;
+  color:#fff;display:block;
+  line-height:1;margin-bottom:.5rem;
+}
+.stat-num span{color:var(--accent)}
+.stat-label{
+  font-size:.8rem;font-weight:600;
+  color:var(--text-muted);
+  letter-spacing:.08em;text-transform:uppercase;
+}
+
+/* ── SECTION ── */
+.section{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;
+  padding:0 2rem 6rem;
+}
+
+.section-tag{
+  font-family:var(--mono);font-size:.72rem;
+  color:var(--accent);letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:.75rem;display:block;
+}
+
+.section-title{
+  font-size:clamp(1.8rem,3.5vw,2.8rem);
+  font-weight:800;color:#fff;
+  letter-spacing:-.03em;line-height:1.1;
+  margin-bottom:1rem;
+}
+
+.section-sub{
+  color:var(--text-dim);font-size:1rem;
+  max-width:520px;line-height:1.7;
+  margin-bottom:3rem;
+}
+
+/* ── FEATURE GRID ── */
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.feature{
+  background:var(--bg2);
+  padding:2rem;
+  transition:background .2s;
+  position:relative;
+}
+.feature:hover{background:var(--surface)}
+
+.feature-icon{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;margin-bottom:1.25rem;
+  border:1px solid var(--border);
+}
+
+.feature h3{
+  font-size:1rem;font-weight:700;color:#fff;
+  margin-bottom:.5rem;letter-spacing:-.01em;
+}
+.feature p{
+  font-size:.88rem;color:var(--text-dim);line-height:1.65;
+}
+
+.feature-tag{
+  position:absolute;top:1.25rem;right:1.25rem;
+  font-family:var(--mono);font-size:.65rem;
+  padding:.2rem .5rem;border-radius:4px;
+  font-weight:700;letter-spacing:.06em;
+}
+.tag-crit{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.2)}
+.tag-new{background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.2)}
+.tag-live{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.2)}
+
+/* ── HOW IT WORKS ── */
+.steps{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;
+  counter-reset:steps;
+}
+
+.step{
+  position:relative;
+  padding:1.75rem;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:10px;
+}
+.step::before{
+  counter-increment:steps;
+  content:counter(steps,'0');
+  font-family:var(--mono);font-size:3rem;font-weight:700;
+  color:var(--text-muted);opacity:.2;
+  position:absolute;top:1rem;right:1.25rem;line-height:1;
+}
+.step-icon{font-size:1.5rem;margin-bottom:1rem;display:block}
+.step h4{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.step p{font-size:.82rem;color:var(--text-dim);line-height:1.6}
+
+/* ── SMARTSCREEN NOTICE ── */
+.notice{
+  position:relative;z-index:1;
+  max-width:760px;margin:0 auto 6rem;padding:0 2rem;
+}
+
+.notice-box{
+  background:var(--bg2);
+  border:1px solid rgba(245,158,11,.2);
+  border-radius:12px;
+  padding:2rem 2.5rem;
+  display:flex;gap:1.5rem;align-items:flex-start;
+}
+
+.notice-icon{
+  font-size:1.8rem;flex-shrink:0;margin-top:.1rem;
+}
+
+.notice-box h4{
+  font-weight:700;color:#fff;margin-bottom:.5rem;font-size:1rem;
+}
+.notice-box p{
+  color:var(--text-dim);font-size:.88rem;line-height:1.7;
+}
+.notice-box strong{color:var(--text)}
+
+/* ── REQUIREMENTS ── */
+.req-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);border-radius:12px;overflow:hidden;
+}
+
+.req-item{
+  background:var(--bg2);padding:1.75rem;
+}
+.req-item h4{
+  font-family:var(--mono);font-size:.75rem;
+  color:var(--accent);letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:.75rem;
+}
+.req-item p{font-size:.88rem;color:var(--text-dim);line-height:1.6}
+
+/* ── CTA ── */
+.cta-section{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:6rem 2rem;
+  border-top:1px solid var(--border);
+}
+
+.cta-section h2{
+  font-size:clamp(2rem,4vw,3.5rem);
+  font-weight:800;color:#fff;
+  letter-spacing:-.04em;margin-bottom:1rem;
+}
+.cta-section p{
+  color:var(--text-dim);font-size:1rem;
+  margin-bottom:2.5rem;max-width:440px;margin-left:auto;margin-right:auto;
+}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  padding:2.5rem 3rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+footer .logo-sm{
+  font-family:var(--mono);font-size:.85rem;color:var(--text-muted);
+  display:flex;align-items:center;gap:.5rem;
+}
+footer p{font-size:.82rem;color:var(--text-muted)}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.reveal{
+  opacity:0;transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── SCAN LINE EFFECT ── */
+@keyframes scanline{
+  0%{top:-10%}
+  100%{top:110%}
+}
+
+.terminal::after{
+  content:'';
+  position:absolute;
+  left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(59,130,246,.4),transparent);
+  animation:scanline 4s linear infinite;
+  pointer-events:none;
+}
+.terminal{position:relative}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .req-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .hero{padding:7rem 1.5rem 3rem}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center}
+}
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">🛡️ NetProbe</div>
-        <nav>
-            <a href="https://github.com/hamza0103/NetProbe" style="color: var(--text-muted); text-decoration: none;" id="repo-link">View Source on GitHub</a>
-        </nav>
-    </header>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="shield">🛡</div>
+    NetProbe
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how">How It Works</a>
+    <a href="#requirements">Requirements</a>
+    <a href="https://github.com" id="repo-link">GitHub</a>
+  </div>
+  <a href="PASTE_YOUR_GITHUB_DOWNLOAD_LINK_HERE" class="nav-cta">Download</a>
+</nav>
 
-    <div class="container">
-        <section class="hero">
-            <h1>Advanced IoT Device & Network Security Scanner</h1>
-            <p>Identify vulnerabilities, discover hidden devices, and secure your local network against emerging smart-device threats with an automated desktop application.</p>
-            
-            <a href="https://github.com/hamza0103/NetProbe/releases/download/v1.0.0/IoTScanner_Setup.exe" class="btn-download">Download for Windows (.exe)</a>
-            
-            <div class="meta-info">
-                Version 1.0.0 | Standalone Installer | <a href="https://www.virustotal.com/gui/file/4bdb8a7a46ff163617241b5ce2361986c76de3b1d0d540a2af47bb98a8e7a35f/detection" target="_blank">View VirusTotal Scan Report (0/70 Clean)</a>
-            </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
 
-            <div class="trust-banner">
-                <h4>⚠️ Installation Notice (Windows SmartScreen)</h4>
-                <p style="margin: 0; font-size: 0.9rem; color: var(--text-main);">
-                    Because this software is an independent security tool and does not contain an expensive corporate digital certificate, Windows Defender may display a warning screen. To install, click <strong>"More info"</strong> and then select <strong>"Run anyway"</strong>. The full source code is inspectable for transparency.
-                </p>
-            </div>
-        </section>
+  <div class="hero-badge">
+    <span class="dot"></span>
+    v1.0.0 — Windows 10 / 11 — Free &amp; Open Source
+  </div>
 
-        <section class="features">
-            <div class="card">
-                <h3>Network Reconnaissance</h3>
-                <p>Scans local subnets efficiently to map every connected smart device, identifying manufacturer, IP addresses, and active MAC signatures.</p>
-            </div>
-            <div class="card">
-                <h3>Vulnerability Auditing</h3>
-                <p>Cross-references target device configurations against live threat intelligence and open vulnerability databases to flag critical firmware risks.</p>
-            </div>
-            <div class="card">
-                <h3>Automated Reporting</h3>
-                <p>Compiles findings instantly into structured, presentation-ready PDF security reports mapping critical vulnerabilities and recommended patching updates.</p>
-            </div>
-        </section>
+  <h1>
+    IoT Network<br>
+    <span>Security Scanner</span>
+  </h1>
 
-        <section class="requirements">
-            <h3 style="color: #fff; margin-top: 0;">System Requirements</h3>
-            <ul style="margin: 0; padding-left: 1.2rem; color: var(--text-muted);">
-                <li><strong>OS:</strong> Windows 10 or Windows 11 (64-bit)</li>
-                <li><strong>Network:</strong> Active Ethernet or Wi-Fi local network interface</li>
-                <li><strong>Dependencies:</strong> Standalone executable, no external runtimes required</li>
-            </ul>
-        </section>
+  <p class="hero-sub">
+    Discover every device on your network, audit for known CVEs, run active penetration tests, and isolate threats — all from a single desktop application.
+  </p>
+
+  <div class="hero-actions">
+    <a href="PASTE_YOUR_GITHUB_DOWNLOAD_LINK_HERE" class="btn-primary">
+      ↓ &nbsp;Download for Windows
+    </a>
+    <a href="https://github.com" class="btn-secondary" id="source-link">
+      ⌥ &nbsp;View Source Code
+    </a>
+  </div>
+
+  <p class="hero-meta">
+    Standalone .exe installer &nbsp;·&nbsp; No runtime required &nbsp;·&nbsp;
+    <a href="PASTE_YOUR_VIRUSTOTAL_LINK_HERE" target="_blank">0/70 VirusTotal ✓</a>
+  </p>
+</section>
+
+<!-- TERMINAL PREVIEW -->
+<div class="terminal-wrap reveal">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="dot dot-r"></span>
+      <span class="dot dot-y"></span>
+      <span class="dot dot-g"></span>
+      <span class="title">NetProbe — Scan Output</span>
     </div>
+    <div class="terminal-body">
+      <div><span class="t-prompt">[08:14:32] </span><span class="t-cmd">Starting full scan on 192.168.1.0/24</span></div>
+      <div><span class="t-prompt">[08:14:33] </span><span class="t-info">[1/6] Discovering devices via ARP broadcast...</span></div>
+      <div><span class="t-prompt">[08:14:38] </span><span class="t-ok">[OK] 9 device(s) discovered on network</span></div>
+      <div><span class="t-prompt">[08:14:38] </span><span class="t-info">[2/6] Gathering vendor intelligence + TLS/UPnP...</span></div>
+      <div><span class="t-prompt">[08:14:52] </span><span class="t-ok">[OK] Vendor, banner, OS fingerprint complete</span></div>
+      <div><span class="t-prompt">[08:14:52] </span><span class="t-info">[3/6] CVE lookup via NIST NVD API v2.0...</span></div>
+      <div><span class="t-prompt">[08:15:10] </span><span class="t-warn">[!] 192.168.1.108 — CVE-2021-36260 &nbsp;CRITICAL &nbsp;CVSS 9.8</span></div>
+      <div><span class="t-prompt">[08:15:12] </span><span class="t-warn">[!] 192.168.1.108 — CVE-2022-30525 &nbsp;HIGH &nbsp;&nbsp;&nbsp;&nbsp;CVSS 7.5</span></div>
+      <div><span class="t-prompt">[08:15:18] </span><span class="t-info">[4/6] Red team — testing default credentials...</span></div>
+      <div><span class="t-prompt">[08:15:31] </span><span class="t-crit">[COMPROMISED] 192.168.1.108 — RTSP unauthenticated access confirmed</span></div>
+      <div><span class="t-prompt">[08:15:31] </span><span class="t-info">[5/6] CVE risk scoring (Module 8)...</span></div>
+      <div><span class="t-prompt">[08:15:32] </span><span class="t-ok">[OK] CVE Risk Score: 74/100 — HIGH EXPOSURE</span></div>
+      <div><span class="t-prompt">[08:15:32] </span><span class="t-info">[6/6] Saving scan to database...</span></div>
+      <div><span class="t-prompt">[08:15:33] </span><span class="t-ok">[OK] Scan #7 saved</span></div>
+      <div>&nbsp;</div>
+      <div><span class="t-score">Network Health Score: 52 / 100 &nbsp;— AT RISK</span></div>
+      <div><span class="t-dim">──────────────────────────────────────────</span></div>
+      <div><span class="t-dim">Deductions: 1 CRITICAL device (−25) · 2 HIGH ports (−10) · 3 CVEs (−13)</span></div>
+    </div>
+  </div>
+</div>
 
-    <footer>
-        <p>&copy; 2026 NetProbe Security Project. Developed for academic research and evaluation.</p>
-    </footer>
+<!-- STATS -->
+<div class="stats reveal">
+  <div class="stat">
+    <span class="stat-num">14<span>+</span></span>
+    <span class="stat-label">Scan Modules</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">12<span></span></span>
+    <span class="stat-label">Ports Monitored</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">NVD<span></span></span>
+    <span class="stat-label">Live CVE Database</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">0<span>/70</span></span>
+    <span class="stat-label">VirusTotal Clean</span>
+  </div>
+</div>
 
+<!-- FEATURES -->
+<section class="section reveal" id="features">
+  <span class="section-tag">// capabilities</span>
+  <h2 class="section-title">Everything in one scanner</h2>
+  <p class="section-sub">Built from 14 independent modules — each one focused on a specific layer of network security.</p>
+
+  <div class="features">
+    <div class="feature">
+      <div class="feature-tag tag-live">LIVE</div>
+      <div class="feature-icon" style="background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.2)">🔍</div>
+      <h3>ARP Device Discovery</h3>
+      <p>Broadcasts ARP requests across your /24 subnet to identify every connected device — including those that block ICMP ping.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-tag tag-crit">CRITICAL</div>
+      <div class="feature-icon" style="background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.2)">🐛</div>
+      <h3>Live CVE Lookup</h3>
+      <p>Queries the NIST NVD REST API v2.0 in real time — matching device banners and vendor signatures against known vulnerabilities.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.2)">⚔️</div>
+      <h3>Red Team Engine</h3>
+      <p>Actively tests default credentials, unauthenticated RTSP access, FTP anonymous login, MQTT brokers, and SMB null sessions.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-tag tag-live">LIVE</div>
+      <div class="feature-icon" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.2)">📡</div>
+      <h3>Traffic Monitor</h3>
+      <p>Live packet capture with protocol breakdown. Detects SYN floods, port scans, ARP spoofing, and ICMP floods in real time.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background:rgba(129,140,248,.1);border-color:rgba(129,140,248,.2)">🔒</div>
+      <h3>Device Isolation</h3>
+      <p>Instantly blocks compromised devices using Windows Firewall rules — no router access needed. One click to isolate, one to restore.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-tag tag-new">AUTO</div>
+      <div class="feature-icon" style="background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.2)">👁</div>
+      <h3>Watch Mode</h3>
+      <p>Continuous background monitoring at configurable intervals. Alerts on new devices, risk escalations, and port changes automatically.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.2)">📈</div>
+      <h3>CVE Risk Scoring</h3>
+      <p>Weighted 0–100 risk score per device and network-wide. CRITICAL=25pts, HIGH=15pts. Grades from Minimal to Critical Exposure.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.2)">📄</div>
+      <h3>PDF Reporting</h3>
+      <p>One-click professional report generation. Includes device inventory, CVE findings, red team results, fix recommendations and score trends.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.2)">🕑</div>
+      <h3>Scan History</h3>
+      <p>Every scan stored in SQLite with score trends, device counts, and change detection. Export full history as CSV in one click.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section reveal" id="how">
+  <span class="section-tag">// workflow</span>
+  <h2 class="section-title">How it works</h2>
+  <p class="section-sub">Six automated stages run sequentially — from raw discovery to actionable remediation.</p>
+
+  <div class="steps">
+    <div class="step">
+      <span class="step-icon">🔍</span>
+      <h4>Discover</h4>
+      <p>ARP broadcast maps every device on your subnet. Double-verified to eliminate false positives.</p>
+    </div>
+    <div class="step">
+      <span class="step-icon">🧠</span>
+      <h4>Analyse</h4>
+      <p>MAC vendor lookup, HTTP banner grab, TLS check, UPnP fingerprint, and OS detection via ICMP TTL.</p>
+    </div>
+    <div class="step">
+      <span class="step-icon">🐛</span>
+      <h4>Lookup CVEs</h4>
+      <p>Live NIST NVD query with 3-retry logic. Full CVE descriptions, CVSS scores, and NVD links.</p>
+    </div>
+    <div class="step">
+      <span class="step-icon">⚔️</span>
+      <h4>Penetration Test</h4>
+      <p>Active red team tests with ethics consent gate. Compromised devices escalate all CVEs to CRITICAL.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SMARTSCREEN NOTICE -->
+<div class="notice reveal">
+  <div class="notice-box">
+    <div class="notice-icon">⚠️</div>
+    <div>
+      <h4>Windows SmartScreen Warning — Expected Behaviour</h4>
+      <p>
+        Because NetProbe is an independent security tool without an expensive corporate code-signing certificate,
+        Windows Defender SmartScreen may display a warning on first launch.
+        This is standard for all new independent software on Windows.<br><br>
+        To proceed: click <strong>"More info"</strong> → <strong>"Run anyway"</strong>.
+        The full source code is publicly available on GitHub for independent verification.
+        A VirusTotal scan report (0/70 detections) is linked above.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- REQUIREMENTS -->
+<section class="section reveal" id="requirements">
+  <span class="section-tag">// system requirements</span>
+  <h2 class="section-title">Requirements</h2>
+  <p class="section-sub">Standalone installer — no Python, no dependencies, no configuration.</p>
+
+  <div class="req-grid">
+    <div class="req-item">
+      <h4>Operating System</h4>
+      <p>Windows 10 (64-bit) or Windows 11. Must be run as Administrator for ARP scanning and firewall operations.</p>
+    </div>
+    <div class="req-item">
+      <h4>Network</h4>
+      <p>Active Wi-Fi or Ethernet connection on a local /24 subnet. Internet required for live CVE lookup via NIST NVD API.</p>
+    </div>
+    <div class="req-item">
+      <h4>No Dependencies</h4>
+      <p>Fully self-contained .exe installer. Python runtime, Npcap, Scapy and all libraries are bundled internally.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <h2>Scan your network<br>in under 3 minutes.</h2>
+  <p>Free, open source, and runs entirely on your own machine. No data leaves your network.</p>
+  <div class="hero-actions" style="justify-content:center">
+    <a href="PASTE_YOUR_GITHUB_DOWNLOAD_LINK_HERE" class="btn-primary">
+      ↓ &nbsp;Download NetProbe for Windows
+    </a>
+    <a href="https://github.com" class="btn-secondary" id="source-link-2">
+      ⌥ &nbsp;View on GitHub
+    </a>
+  </div>
+  <p style="margin-top:1.5rem;font-size:.8rem;color:var(--text-muted);font-family:var(--mono)">
+    Version 1.0.0 &nbsp;·&nbsp; MIT License &nbsp;·&nbsp; Windows 10/11 64-bit
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo-sm">🛡 NetProbe Security Scanner</div>
+  <p>Built for academic research &amp; network security evaluation. &nbsp;<a href="https://github.com" id="footer-link">GitHub</a></p>
+  <p style="font-family:var(--mono);font-size:.75rem">© 2026</p>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+  })
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Typewriter on terminal
+const lines = document.querySelectorAll('.terminal-body > div');
+lines.forEach((l,i)=>{
+  l.style.opacity='0';
+  l.style.transition='opacity 0.3s ease';
+  setTimeout(()=>{l.style.opacity='1'},600 + i*180);
+});
+</script>
 </body>
 </html>
