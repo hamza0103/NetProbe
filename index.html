@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetProbe IoT Security Scanner | Download for Windows</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --accent-color: #58a6ff;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --border-color: #30363d;
+            --success-color: #238636;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-download {
+            background-color: var(--success-color);
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: background-color 0.2s;
+            box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
+        }
+
+        .btn-download:hover {
+            background-color: #2ea043;
+        }
+
+        .meta-info {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .meta-info a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .trust-banner {
+            background-color: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 650px;
+            text-align: left;
+        }
+
+        .trust-banner h4 {
+            margin: 0 0 0.5rem 0;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: transform 0.2s;
+        }
+
+        .card h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        .requirements {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem 2rem 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">🛡️ NetProbe</div>
+        <nav>
+            <a href="https://github.com/hamza0103/NetProbe" style="color: var(--text-muted); text-decoration: none;" id="repo-link">View Source on GitHub</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h1>Advanced IoT Device & Network Security Scanner</h1>
+            <p>Identify vulnerabilities, discover hidden devices, and secure your local network against emerging smart-device threats with an automated desktop application.</p>
+            
+            <a href="https://github.com/hamza0103/NetProbe/releases/download/v1.0.0/IoTScanner_Setup.exe" class="btn-download">Download for Windows (.exe)</a>
+            
+            <div class="meta-info">
+                Version 1.0.0 | Standalone Installer | <a href="https://www.virustotal.com/gui/file/4bdb8a7a46ff163617241b5ce2361986c76de3b1d0d540a2af47bb98a8e7a35f/detection" target="_blank">View VirusTotal Scan Report (0/70 Clean)</a>
+            </div>
+
+            <div class="trust-banner">
+                <h4>⚠️ Installation Notice (Windows SmartScreen)</h4>
+                <p style="margin: 0; font-size: 0.9rem; color: var(--text-main);">
+                    Because this software is an independent security tool and does not contain an expensive corporate digital certificate, Windows Defender may display a warning screen. To install, click <strong>"More info"</strong> and then select <strong>"Run anyway"</strong>. The full source code is inspectable for transparency.
+                </p>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="card">
+                <h3>Network Reconnaissance</h3>
+                <p>Scans local subnets efficiently to map every connected smart device, identifying manufacturer, IP addresses, and active MAC signatures.</p>
+            </div>
+            <div class="card">
+                <h3>Vulnerability Auditing</h3>
+                <p>Cross-references target device configurations against live threat intelligence and open vulnerability databases to flag critical firmware risks.</p>
+            </div>
+            <div class="card">
+                <h3>Automated Reporting</h3>
+                <p>Compiles findings instantly into structured, presentation-ready PDF security reports mapping critical vulnerabilities and recommended patching updates.</p>
+            </div>
+        </section>
+
+        <section class="requirements">
+            <h3 style="color: #fff; margin-top: 0;">System Requirements</h3>
+            <ul style="margin: 0; padding-left: 1.2rem; color: var(--text-muted);">
+                <li><strong>OS:</strong> Windows 10 or Windows 11 (64-bit)</li>
+                <li><strong>Network:</strong> Active Ethernet or Wi-Fi local network interface</li>
+                <li><strong>Dependencies:</strong> Standalone executable, no external runtimes required</li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 NetProbe Security Project. Developed for academic research and evaluation.</p>
+    </footer>
+
+</body>
+</html>
